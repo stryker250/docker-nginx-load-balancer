@@ -17,4 +17,4 @@ ADD scripts/run.sh /
 
 EXPOSE 80 443
 
-CMD /run.sh
+CMD ["/bin/sh", "/run.sh"]
