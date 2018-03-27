@@ -41,6 +41,8 @@ def docker_checker():
         app_int_port = '80'
         app_hostname = ''
         app_https = False
+        app_ssl_cert = 'ssl.cert'
+        app_ssl_key = 'ssl.key'
         if event['status'] == 'start':
             if 'APP_NAME' in attributes:
                 app_name = attributes['APP_NAME']
@@ -53,6 +55,10 @@ def docker_checker():
                 if 'APP_HTTPS' in attributes and \
                     attributes['APP_HTTPS'].lower() == 'yes':
                     app_https = True
+                if 'APP_SSL_CERT' in attributes:
+                    app_ssl_cert = attributes['APP_SSL_CERT']
+                if 'APP_SSL_KEY' in attributes:
+                    app_ssl_key = attributes['APP_SSL_KEY']
 
                 hostname = attributes['name']
 
@@ -70,7 +76,9 @@ def docker_checker():
                     servers[app_hostname] = {
                         'https': app_https,
                         'port': app_ext_port,
-                        'upstream': app_name
+                        'upstream': app_name,
+                        'ssl_cert': app_ssl_cert,
+                        'ssl_key': app_ssl_key
                     }
 
                 print('Updating NGINX Configuration', file=stderr)
