@@ -9,6 +9,13 @@ The path / URL to the Docker environment can be set as an environment variable, 
 DOCKER_HOST = unix:///var/run/docker.sock
 ```
 
+The option to check *services* or *containers* can be set with an environment variable, the default is to check services:
+
+```
+CHECK_WHICH = containers
+CHECK_WHICH = services
+```
+
 The following labels will be checked for load balancing:
 
 **APP_NAME**  
