@@ -71,7 +71,8 @@ def add_containers():
                     added_containers.append({
                         'id': id,
                         'app_name': app_name,
-                        'upstream_address': upstream_address
+                        'upstream_address': upstream_address,
+                        'app_hostname': app_hostname
                     })
             else:
                 upstreams[app_name] = {
@@ -81,7 +82,8 @@ def add_containers():
                 added_containers.append({
                     'id': id,
                     'app_name': app_name,
-                    'upstream_address': upstream_address
+                    'upstream_address': upstream_address,
+                    'app_hostname': app_hostname
                 })
 
             if app_hostname not in servers:
@@ -101,6 +103,7 @@ def remove_containers():
         _id = _container['id']
         app_name = _container['app_name']
         upstream_address = _container['upstream_address']
+        app_hostname = _container['app_hostname']
         remove = False
         changed = False
         try:
@@ -129,7 +132,6 @@ def remove_containers():
 
 def docker_checker():
     while True:
-        # docker_services()
         add_containers()
         remove_containers()
         time.sleep(5)
