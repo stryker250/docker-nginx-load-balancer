@@ -45,6 +45,7 @@ def add_services():
         app_ssl_cert = 'ssl.cert'
         app_ssl_key = 'ssl.key'
         changed = False
+        app_ws_enabled = False
 
         attributes = None
         id = service.id
@@ -73,6 +74,8 @@ def add_services():
                 app_ssl_cert = attributes['APP_SSL_CERT']
             if 'APP_SSL_KEY' in attributes:
                 app_ssl_key = attributes['APP_SSL_KEY']
+            if 'APP_WS_ENABLED' in attributes and attributes['APP_WS_ENABLED'] == 'yes':
+                app_ws_enabled = True
 
             upstream_address = str(hostname) + ':' + str(app_int_port)
 
@@ -104,7 +107,8 @@ def add_services():
                     'port': app_ext_port,
                     'upstream': app_name,
                     'ssl_cert': app_ssl_cert,
-                    'ssl_key': app_ssl_key
+                    'ssl_key': app_ssl_key,
+                    'ws_enabled': app_ws_enabled
                 }
             if changed:
                 print('Updating NGINX Configuration for addition', file=stdout)
