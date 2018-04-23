@@ -11,6 +11,7 @@ RUN mkdir /templates
 RUN mkdir /run/nginx
 RUN mkdir /etc/nginx/ssl
 
+ADD files/nginx.conf /etc/nginx/nginx.conf
 ADD scripts/event-listner.py /
 ADD templates/loadbalancer.conf /templates/
 ADD scripts/run.sh /
