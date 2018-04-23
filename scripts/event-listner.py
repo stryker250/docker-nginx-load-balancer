@@ -29,6 +29,7 @@ def update_config():
         with open('/etc/nginx/conf.d/loadbalancer.conf', 'w') as f:
             conf = template.render(upstreams=upstreams, servers=servers)
             f.write(conf)
+        time.sleep(10)
         subprocess.call(["nginx", "-s", "reload"])
     except jinja2.TemplateError, e:
         print('Unable to update NGINX configuration: %s' % e, file=stderr)
@@ -48,7 +49,7 @@ def add_services():
         app_ws_enabled = False
 
         attributes = None
-        id = service.id
+        _id = service.id
         spec = service.attrs['Spec']
         container_spec = spec['TaskTemplate']['ContainerSpec']
         if 'Labels' in container_spec:
@@ -84,7 +85,7 @@ def add_services():
                     upstreams[app_name]['addresses'].append(upstream_address)
                     changed = True
                     added_services.append({
-                        'id': id,
+                        'id': _id,
                         'app_name': app_name,
                         'upstream_address': upstream_address,
                         'app_hostname': app_hostname
@@ -95,7 +96,7 @@ def add_services():
                 }
                 changed = True
                 added_services.append({
-                    'id': id,
+                    'id': _id,
                     'app_name': app_name,
                     'upstream_address': upstream_address,
                     'app_hostname': app_hostname
